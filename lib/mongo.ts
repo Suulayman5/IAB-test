@@ -1,23 +1,19 @@
 import { MongoClient } from 'mongodb';
 
-declare global {
-  namespace NodeJS {
-    interface GlobalThis {
-      _mongoClientPromise?: Promise<MongoClient>;
-    }
-  }
-}
-
 const uri = process.env.MONGODB_URI!;
 const options = {};
+
+declare global {
+  var _mongoClientPromise: Promise<MongoClient> | undefined;
+}
 
 let client;
 let clientPromise: Promise<MongoClient>;
 
-if (!(globalThis as NodeJS.GlobalThis)._mongoClientPromise) {
+if (!global._mongoClientPromise) {
   client = new MongoClient(uri, options);
-  globalThis._mongoClientPromise = client.connect();
+  global._mongoClientPromise = client.connect();
 }
-clientPromise = globalThis._mongoClientPromise;
+clientPromise = global._mongoClientPromise;
 
 export default clientPromise;

@@ -40,7 +40,7 @@ export default function App() {
     queryKey: ['availableNetworks'],
     queryFn: async () => {
       const res = await axios.get('/api/airtimeapi');
-      return res.data;
+      return res.data as Record<string, { available: boolean }>;
     },
   });
 
