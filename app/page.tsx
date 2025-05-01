@@ -58,7 +58,7 @@ export default function App() {
       return toast.error('Please select a mobile network.');
     }
   
-    if (!amount || isNaN(amountNumber) || amountNumber <= 50) {
+    if (!amount || isNaN(amountNumber) || amountNumber < 50) {
       return toast.error('Minimum amount is ₦ 50.');
     }
     mutate();
